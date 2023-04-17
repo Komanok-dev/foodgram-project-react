@@ -1,4 +1,4 @@
-![Foodgram](https://github.com/Komanok-dev/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg
+![Foodgram](https://github.com/Komanok-dev/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 # Проект Foodgram
 ​
 Проект Foodgram собирает рецепты пользователей. Пользователи могут публиковать рецепты, подписываться на публикации других пользователей, добавлять рецепты в избранное, а также скачивать список необходимых продуктов из рецепта для приготовления блюд.

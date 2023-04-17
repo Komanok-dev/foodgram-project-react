@@ -20,7 +20,7 @@ services:
       - ./.env
   
   frontend:
-    image: komanok/foodgram_frontend:latest
+    image: komanok/foodgram_frontend:v1
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:

@@ -32,11 +32,10 @@ class User(AbstractUser):
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
-
     def save(self, *args, **kwargs):
         if self.username == 'me':
             return ValidationError('Username не может быть "me".')
-        super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     @property
     def is_admin(self):
@@ -58,7 +57,7 @@ class User(AbstractUser):
                 name='Пользователь не может быть назван me!',
             ),
         )
-    
+
     def __str__(self):
         return self.username
 
@@ -85,7 +84,7 @@ class Follow(models.Model):
                 fields=('user', 'author'),
                 name='unique_user_follow'
             ),
-             models.CheckConstraint(
+            models.CheckConstraint(
                 check=~models.Q(author=models.F('user')),
                 name='Пользователь не может подписаться на самого себя',
             ),

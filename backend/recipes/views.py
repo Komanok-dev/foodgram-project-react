@@ -2,18 +2,17 @@ import rest_framework.permissions
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from recipes.filters import IngredientFilter, RecipeFilter, Recipe
-from recipes.models import Ingredient, Tag, Favorite, ShoppingCart, IngredientRecipe
+from recipes.filters import IngredientFilter, Recipe, RecipeFilter
+from recipes.models import (Favorite, Ingredient, IngredientRecipe,
+                            ShoppingCart, Tag)
 from recipes.permissions import IsAuthenticatedOwnerOrReadOnly
-from recipes.serializers import (
-    IngredientSerializer, TagSerializer, RecipeSerializer,
-    FollowRecipeSerializer
-)
+from recipes.serializers import (FollowRecipeSerializer, IngredientSerializer,
+                                 RecipeSerializer, TagSerializer)
 from recipes.utils import download_pdf
 
 
@@ -44,7 +43,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
     @staticmethod
-    def favorite_add(request, pk, model, errors):
+    def favorite_add(self, request, pk, model, errors):
         if model.objects.filter(user=request.user, recipe__id=pk).exists():
             return Response(
                 {'errors': errors['recipe_in']},
@@ -57,7 +56,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def favorite_delete(request, pk, model, errors):    
+    def favorite_delete(self, request, pk, model, errors):
         recipe = model.objects.filter(user=request.user, recipe__id=pk)
         if recipe.exists():
             recipe.delete()

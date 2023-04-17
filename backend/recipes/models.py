@@ -98,7 +98,6 @@ class IngredientRecipe(models.Model):
         verbose_name='Ингредиент',
     )
 
-
     class Meta:
         verbose_name = 'Количество ингредиента'
         verbose_name_plural = 'Количество ингредиентов'

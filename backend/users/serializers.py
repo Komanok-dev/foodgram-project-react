@@ -1,12 +1,12 @@
 import django.contrib.auth.password_validation as validators
 from django.core import exceptions
+from recipes.serializers import FollowRecipeSerializer
 from rest_framework import serializers
 from rest_framework.fields import CurrentUserDefault
 from rest_framework.generics import get_object_or_404
 from rest_framework.validators import UniqueTogetherValidator
 
-from recipes.serializers import FollowRecipeSerializer
-from users.models import User, Follow
+from users.models import Follow, User
 
 
 class UserSerializer(serializers.ModelSerializer):

@@ -1,6 +1,5 @@
 from django_filters import rest_framework as rest_framework_filter
 from rest_framework.filters import SearchFilter
-
 from recipes.models import Recipe, User
 
 

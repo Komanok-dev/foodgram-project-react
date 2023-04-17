@@ -6,13 +6,15 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-
 from recipes.filters import IngredientFilter, Recipe, RecipeFilter
-from recipes.models import (Favorite, Ingredient, IngredientRecipe,
-                            ShoppingCart, Tag)
+from recipes.models import (
+    Favorite, Ingredient, IngredientRecipe, ShoppingCart, Tag
+)
 from recipes.permissions import IsAuthenticatedOwnerOrReadOnly
-from recipes.serializers import (FollowRecipeSerializer, IngredientSerializer,
-                                 RecipeSerializer, TagSerializer)
+from recipes.serializers import (
+    FollowRecipeSerializer, IngredientSerializer,
+    RecipeSerializer, TagSerializer
+)
 from recipes.utils import download_pdf
 
 

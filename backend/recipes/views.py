@@ -44,19 +44,20 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
     @staticmethod
-    def __favorite_shopping(request, pk, model, errors):
-        if request.method == 'POST':
-            if model.objects.filter(user=request.user, recipe__id=pk).exists():
-                return Response(
-                    {'errors': errors['recipe_in']},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            recipe = get_object_or_404(Recipe, id=pk)
-            model.objects.create(user=request.user, recipe=recipe)
-            serializer = FollowRecipeSerializer(
-                recipe, context={'request': request}
+    def favorite_add(request, pk, model, errors):
+        if model.objects.filter(user=request.user, recipe__id=pk).exists():
+            return Response(
+                {'errors': errors['recipe_in']},
+                status=status.HTTP_400_BAD_REQUEST
             )
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        recipe = get_object_or_404(Recipe, id=pk)
+        model.objects.create(user=request.user, recipe=recipe)
+        serializer = FollowRecipeSerializer(
+            recipe, context={'request': request}
+        )
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def favorite_delete(request, pk, model, errors):    
         recipe = model.objects.filter(user=request.user, recipe__id=pk)
         if recipe.exists():
             recipe.delete()
@@ -70,29 +71,37 @@ class RecipeViewSet(viewsets.ModelViewSet):
         )
 
     @action(
-        methods=['POST', 'DELETE'],
+        methods=('POST', 'DELETE'),
         detail=True,
         permission_classes=[rest_framework.permissions.IsAuthenticated]
     )
     def favorite(self, request, pk):
-        return self.__favorite_shopping(request, pk, Favorite, {
-            'recipe_in': 'Рецепт уже в избранном',
+        if request.method == 'POST':
+            return self.favorite_add(request, pk, Favorite, {
+                'recipe_in': 'Рецепт уже в избранном',
+            })
+        return self.favorite_delete(request, pk, Favorite, {
             'recipe_not_in': 'Рецепта нет в избранном'
         })
 
     @action(
-        methods=['POST', 'DELETE'],
+        methods=('POST', 'DELETE'),
         detail=True,
         permission_classes=[rest_framework.permissions.IsAuthenticated]
     )
     def shopping_cart(self, request, pk):
-        return self.__favorite_shopping(request, pk, ShoppingCart, {
+        if request.method == 'POST':
+            return self.favorite_add(request, pk, ShoppingCart, {
+                'recipe_in': 'Рецепт уже в списке покупок',
+                'recipe_not_in': 'Рецепта нет в спике покупок'
+            })
+        return self.favorite_delete(request, pk, ShoppingCart, {
             'recipe_in': 'Рецепт уже в списке покупок',
             'recipe_not_in': 'Рецепта нет в спике покупок'
         })
 
     @action(
-        methods=['GET'],
+        methods=('GET'),
         detail=False,
         permission_classes=[rest_framework.permissions.IsAuthenticated]
     )

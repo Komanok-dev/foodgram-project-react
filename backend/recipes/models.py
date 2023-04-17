@@ -29,12 +29,12 @@ class Ingredient(models.Model):
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
         ordering = ('name',)
-        constraints = [
+        constraints = (
             models.UniqueConstraint(
                 fields=['name', 'measurement_unit'],
                 name='unique_ingredient'
-            )
-        ]
+            ),
+        )
 
     def __str__(self):
         return f'{self.name}, {self.measurement_unit}'
@@ -97,12 +97,7 @@ class IngredientRecipe(models.Model):
         related_name='ingredient_to_recipe',
         verbose_name='Ингредиент',
     )
-    amount = models.PositiveSmallIntegerField(
-        verbose_name='Количество ингредиента',
-        validators=(
-            MinValueValidator(1, message='Количество не может быть меньше 1'),
-        ),
-    )
+
 
     class Meta:
         verbose_name = 'Количество ингредиента'
@@ -160,9 +155,9 @@ class ShoppingCart(models.Model):
     class Meta:
         verbose_name = 'Корзина'
         verbose_name_plural = 'Корзина'
-        constraints = [
+        constraints = (
             models.UniqueConstraint(
                 fields=('user', 'recipe'),
                 name='uniq_cart_user_recipe'
-            )
-        ]
+            ),
+        )

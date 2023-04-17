@@ -13,8 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_is_subscribed(self, obj):
         if (
-            'request' not in self.context or
-            self.context['request'].user.is_anonymous
+            'request' not in self.context
+            or self.context['request'].user.is_anonymous
         ):
             return False
         return Follow.objects.filter(
@@ -98,7 +98,7 @@ class FollowCreateSerializer(serializers.ModelSerializer):
         slug_field='id',
         queryset=User.objects.all(),
         default=CurrentUserDefault(),
-        ),
+    ),
     author = serializers.SlugRelatedField(
         slug_field='id',
         queryset=User.objects.all())

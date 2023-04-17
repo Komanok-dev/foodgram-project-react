@@ -62,7 +62,7 @@ infra/nginx.conf
 и папку
 docs/
 командами:
-scp infra/docker-compose.yml hostname@ip-adress:/home/username/
+scp infra/docker-compose.yaml hostname@ip-adress:/home/username/
 scp infra/nginx.conf hostname@ip-adress:/home/username/
 scp -r docs hostname@ip-adress:/home/username/
 ```

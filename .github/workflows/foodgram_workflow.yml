@@ -58,7 +58,6 @@ jobs:
         script: |
             sudo docker-compose stop
             sudo docker compose rm -f backend
-            sudo docker image rmi ${{ secrets.DOCKER_USERNAME }}/foodgram_backend
             rm .env
             touch .env
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env

@@ -9,7 +9,7 @@ services:
       - ./.env
   
   backend:
-    image: komanok/foodgram_backend:latest
+    image: komanok/foodgram_backend:v1
     restart: always
     volumes:
       - static_value:/app/static/

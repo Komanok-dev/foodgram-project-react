@@ -40,7 +40,7 @@ Debug=False
 
 **Занесите в раздел Secrets вашего Github указанные выше переменные, а также следующие:**
 ```
-Ваш докерхаб:
+Данные докерхаба:
 DOCKER_USERNAME
 DOCKER_PASSWORD
 

@@ -1,11 +1,11 @@
-import rest_framework.permissions
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+
 from recipes.filters import IngredientFilter, Recipe, RecipeFilter
 from recipes.models import (
     Favorite, Ingredient, IngredientRecipe, ShoppingCart, Tag
@@ -73,7 +73,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @action(
         methods=('POST', 'DELETE'),
         detail=True,
-        permission_classes=[rest_framework.permissions.IsAuthenticated]
+        permission_classes=(IsAuthenticated,)
     )
     def favorite(self, request, pk):
         if request.method == 'POST':
@@ -87,23 +87,21 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @action(
         methods=('POST', 'DELETE'),
         detail=True,
-        permission_classes=[rest_framework.permissions.IsAuthenticated]
+        permission_classes=(IsAuthenticated,)
     )
     def shopping_cart(self, request, pk):
         if request.method == 'POST':
             return self.favorite_add(request, pk, ShoppingCart, {
                 'recipe_in': 'Рецепт уже в списке покупок',
-                'recipe_not_in': 'Рецепта нет в спике покупок'
             })
         return self.favorite_delete(request, pk, ShoppingCart, {
-            'recipe_in': 'Рецепт уже в списке покупок',
             'recipe_not_in': 'Рецепта нет в спике покупок'
         })
 
     @action(
         methods=('GET'),
         detail=False,
-        permission_classes=[rest_framework.permissions.IsAuthenticated]
+        permission_classes=(IsAuthenticated,)
     )
     def download_shopping_cart(self, request):
         ingredients_obj = (

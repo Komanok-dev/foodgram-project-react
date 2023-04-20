@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404
 from drf_base64.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
-
 from users.models import Follow
 from recipes.models import (
     Favorite, Ingredient, IngredientRecipe, Recipe, ShoppingCart, Tag, User
@@ -137,7 +136,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         tags = validated_data.pop('tags', None)
         if not ingredients:
             raise serializers.ValidationError('нужен хотя бы один ингредиент')
-        elif not tags:
+        if not tags:
             raise serializers.ValidationError('нужен хотя бы один тег')
         recipe = Recipe.objects.create(**validated_data)
         recipe.tags.set(tags)

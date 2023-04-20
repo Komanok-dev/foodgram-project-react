@@ -56,7 +56,7 @@ class IngredientRecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IngredientRecipe
-        fields = ('id', 'name', 'measurement_unit')
+        fields = ('id', 'name', 'measurement_unit', 'amount')
         validators = [
             UniqueTogetherValidator(
                 queryset=IngredientRecipe.objects.all(),
@@ -112,7 +112,7 @@ class IngredientCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IngredientRecipe
-        fields = ('id',)
+        fields = ('id', 'amount')
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -146,6 +146,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             IngredientRecipe(
                 recipe=recipe,
                 ingredient=ingredient.get('id'),
+                amount=ingredient.get('amount')
             )
             for ingredient in ingredients
         ]
@@ -165,6 +166,7 @@ class RecipeSerializer(serializers.ModelSerializer):
                 IngredientRecipe(
                     recipe=instance,
                     ingredient=ingredient.get('id'),
+                    amount=ingredient.get('amount')
                 )
                 for ingredient in ingredients
             ]

@@ -44,7 +44,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    @staticmethod
     def favorite_add(self, request, pk, model, errors):
         if model.objects.filter(user=request.user, recipe__id=pk).exists():
             return Response(

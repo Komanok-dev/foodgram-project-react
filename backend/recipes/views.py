@@ -98,7 +98,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         })
 
     @action(
-        methods=('GET'),
+        methods=('GET',),
         detail=False,
         permission_classes=(IsAuthenticated,)
     )

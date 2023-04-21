@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator
 from django.db import models
 
 User = get_user_model()
@@ -97,15 +97,8 @@ class IngredientRecipe(models.Model):
         related_name='ingredient_to_recipe',
         verbose_name='Ингредиент',
     )
-    amount = models.PositiveSmallIntegerField(
-        validators=(
-            MinValueValidator(
-                1, message='Минимальное количество ингредиента 1'
-            ),
-            MaxValueValidator(
-                5000, message='Максимальное количество ингредиентов 5000'
-            )
-        ),
+    amount = models.PositiveIntegerField(
+        default=0,
         verbose_name='Количество ингредиента',
     )
 

@@ -28,7 +28,7 @@ git clone
 
 **Создайте .env файл в директории infra/, в котором должны содержаться следующие переменные:**
 ```
-SECRET_KEY='django-insecure-%2=o^w0(8hh&qk1fxv1*aj#a!+lydq$5-24*)y82j79y9bi#-k'
+SECRET_KEY='generate-new-django-secret-key'
 DB_ENGINE=django.db.backends.postgresql
 DB_NAME=postgres
 POSTGRES_USER=postgres
@@ -78,3 +78,7 @@ git push
 ```
 docker-compose exec backend python manage.py createsuperuser
 ```
+
+для проверки админки:
+admin@admin.com
+DIPLOMproject2

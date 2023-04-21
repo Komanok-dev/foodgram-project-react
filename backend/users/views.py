@@ -21,7 +21,7 @@ class SubscriptionsViewSet(viewsets.ModelViewSet):
     @action(
         detail=True,
         permission_classes=[permissions.IsAuthenticated],
-        methods=['POST']
+        methods=('POST',)
     )
     def subscribe(self, request, **kwargs):
         id = kwargs.get('pk')

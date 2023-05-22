@@ -78,7 +78,3 @@ git push
 ```
 docker-compose exec backend python manage.py createsuperuser
 ```
-
-для проверки админки:
-admin@admin.com
-DIPLOMproject2
